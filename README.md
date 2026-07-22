@@ -16,6 +16,7 @@ This repository is intentionally data-safe. It contains reusable code, tests and
 - L0: static through-port MRM transfer function, Q/detuning sweep, OMA and ER.
 - L1: noiseless 53.125-Gbaud NRZ waveform and receiver eye.
 - L2: isolated additive white-noise validation from one-sided PSD to filtered RMS and countable BER.
+- L3: signal-dependent photodiode shot noise, conditional 0/1 RMS and a synthetic receiver-sensitivity curve.
 - Automated tests cover PRBS balance, reference-plane alignment, Q sweeps, PSD/RMS closure and BER counting.
 
 Formal TDEC, calibrated sensitivity, laser RIN/linewidth conversion, thermal control, WDM crosstalk and receiver rings are future work.
@@ -41,6 +42,7 @@ Run the verified stages:
 & .\.venv\Scripts\python.exe scripts\run_static_baseline.py
 & .\.venv\Scripts\python.exe scripts\run_noiseless_l1.py
 & .\.venv\Scripts\python.exe scripts\run_white_noise_validation.py
+& .\.venv\Scripts\python.exe scripts\run_shot_noise_sensitivity.py
 & .\.venv\Scripts\python.exe -m pytest -q
 ```
 
@@ -58,5 +60,5 @@ data/         ignored placeholders for local data
 results/      ignored generated outputs
 ```
 
-Read [docs/model_scope.md](docs/model_scope.md) before interpreting results and [docs/data_boundary.md](docs/data_boundary.md) before adding data or parameters.
+Read [docs/model_scope.md](docs/model_scope.md) before interpreting results, [docs/shot_noise_and_sensitivity.md](docs/shot_noise_and_sensitivity.md) for the L3 equations, and [docs/data_boundary.md](docs/data_boundary.md) before adding data or parameters.
 

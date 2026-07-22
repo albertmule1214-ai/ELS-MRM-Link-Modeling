@@ -1,0 +1,25 @@
+[meta]
+name = "shot_noise_sensitivity_synthetic_v0"
+purpose = "Validate signal-dependent PD shot noise and a synthetic sensitivity sweep"
+status = "synthetic_validation_not_device_prediction"
+random_seed = 20260723
+
+[shot_noise]
+reference_plane = { value = "photodiode_current_before_TIA", source = "MODEL", ref = "One-sided PSD S_i=2*q*I" }
+electron_charge = { value = 1.602176634e-19, unit = "C", source = "PHYSICAL_CONSTANT", ref = "Exact SI elementary charge" }
+dark_current = { value = 0.0, unit = "A", source = "ASSUMPTION", ref = "Disabled in the first isolated shot-noise validation" }
+
+[tia_noise]
+reference_plane = { value = "TIA_output_before_reference_filter", source = "MODEL", ref = "Additive output-referred white-noise interface" }
+output_voltage_noise_asd = { value = 10.0e-9, unit = "V/sqrt(Hz)", source = "ASSUMPTION", ref = "Synthetic placeholder; replace with approved TIA data" }
+
+[validation]
+welch_segment_samples = { value = 16384, unit = "sample", source = "ASSUMPTION", ref = "PSD resolution versus averaging tradeoff" }
+impulse_response_min_samples = { value = 4096, unit = "sample", source = "ASSUMPTION", ref = "Captures the reference-filter squared impulse response" }
+
+[sensitivity]
+additional_loss_min = { value = 0.0, unit = "dB", source = "ASSUMPTION", ref = "Synthetic sweep start" }
+additional_loss_max = { value = 60.0, unit = "dB", source = "ASSUMPTION", ref = "Synthetic sweep stop" }
+points = { value = 121, unit = "point", source = "ASSUMPTION", ref = "0.5-dB resolution" }
+target_ber = { value = 2.4e-4, unit = "1", source = "PUBLIC_SPEC", ref = "Illustrative pre-FEC reference target; formal compliance is not claimed" }
+
