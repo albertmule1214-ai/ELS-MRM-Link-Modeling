@@ -1,0 +1,18 @@
+[meta]
+name = "white_noise_validation_v0"
+purpose = "Validate one-sided white-noise PSD, filtered RMS and Gaussian BER"
+status = "validation_only_not_device_specification"
+random_seed = 20260722
+
+[white_noise]
+reference_plane = { value = "TIA_output_before_reference_filter", source = "ASSUMPTION", ref = "Chosen explicitly for the first isolated noise validation" }
+psd_convention = { value = "one_sided", source = "MODEL", ref = "ASD squared is integrated from 0 to fs/2" }
+output_voltage_noise_asd = { value = 10.0e-9, unit = "V/sqrt(Hz)", source = "ASSUMPTION", ref = "Placeholder only; replace with project TIA output-noise data" }
+number_of_time_samples = { value = 1048576, unit = "sample", source = "ASSUMPTION", ref = "2^20 samples for reproducible PSD/RMS validation" }
+welch_segment_samples = { value = 16384, unit = "sample", source = "ASSUMPTION", ref = "PSD resolution versus averaging tradeoff" }
+
+[ber_stress_validation]
+target_q = { value = 3.0, unit = "1", source = "VALIDATION_ONLY", ref = "Produces a directly countable BER near 1e-3" }
+repeats = { value = 32, unit = "PRBS_period_equivalent", source = "VALIDATION_ONLY", ref = "About one million decisions without brute-forcing low BER" }
+threshold = { value = "midpoint_of_noiseless_mean_levels", source = "MODEL", ref = "Equal-variance first validation" }
+

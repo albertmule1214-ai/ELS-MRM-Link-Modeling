@@ -1,0 +1,65 @@
+[meta]
+name = "mrm_oci_53g_nrz_synthetic_v0"
+purpose = "Portable noiseless single-channel ELS + TX MRM + receiver example"
+status = "synthetic_validation_not_device_prediction"
+random_seed = 20260722
+
+[signal]
+modulation = { value = "NRZ", source = "PUBLIC_SPEC", ref = "OIF 200G-OCI Optical PHY v1.0 example" }
+symbol_rate = { value = 53.125e9, unit = "baud", source = "PUBLIC_SPEC", ref = "OIF 200G-OCI Optical PHY v1.0 example" }
+pattern = { value = "PRBS15", source = "ASSUMPTION", ref = "Portable deterministic baseline" }
+samples_per_ui = { value = 32, unit = "sample/UI", source = "ASSUMPTION", ref = "Numerical resolution" }
+number_of_bits = { value = 32767, unit = "bit", source = "ASSUMPTION", ref = "One PRBS15 period" }
+
+[els]
+apc_setpoint = { value = 10.0e-3, unit = "W", source = "ASSUMPTION", ref = "Synthetic optical-power reference plane" }
+wavelength = { value = 1310.28e-9, unit = "m", source = "PUBLIC_SPEC", ref = "O-band example wavelength" }
+rin = { value = -144.0, unit = "dB/Hz", source = "PUBLIC_SPEC", ref = "Illustrative specification entry; valid frequency range must be defined before use" }
+linewidth = { value = 1.0e6, unit = "Hz", source = "PUBLIC_SPEC", ref = "Illustrative upper-bound entry" }
+rin_enabled = false
+linewidth_enabled = false
+apc_low_frequency_noise_enabled = false
+
+[driver]
+model = { value = "first_order_or_tabulated_impulse_response", source = "MODEL", ref = "Replaceable driver interface" }
+voltage_low = { value = -4.0, unit = "V", source = "ASSUMPTION", ref = "Synthetic voltage swing" }
+voltage_high = { value = 0.0, unit = "V", source = "ASSUMPTION", ref = "Synthetic voltage swing" }
+transition_time_20_80 = { value = 10.0e-12, unit = "s", source = "ASSUMPTION", ref = "Synthetic finite-edge baseline" }
+voltage_noise_enabled = false
+jitter_enabled = false
+
+[mrm]
+port = { value = "through", source = "MODEL", ref = "First portable topology" }
+loaded_q = { value = 7500.0, unit = "1", source = "ASSUMPTION", ref = "Synthetic midpoint" }
+loaded_q_sweep = { value = [5000.0, 7500.0, 10000.0], unit = "1", source = "ASSUMPTION", ref = "Synthetic sensitivity sweep" }
+detuning = { value = 0.0, unit = "m", source = "ASSUMPTION", ref = "Initial operating point" }
+resonance_depth = { value = 10.0, unit = "dB", source = "ASSUMPTION", ref = "Synthetic notch depth" }
+off_resonance_insertion_loss = { value = 0.0, unit = "dB", source = "ASSUMPTION", ref = "Normalized first baseline" }
+voltage_tuning_efficiency = { value = 25.0e-12, unit = "m/V", source = "PUBLIC_LITERATURE_EXAMPLE", ref = "Illustrative value; replace with measured/PDK O-band data" }
+reference_voltage = { value = -4.0, unit = "V", source = "MODEL", ref = "Configured-detuning convention" }
+temperature_tuning_efficiency = { value = 74.0e-12, unit = "m/degC", source = "PUBLIC_LITERATURE_EXAMPLE", ref = "Illustrative value; disabled in V0" }
+cavity_dynamics_enabled = false
+temperature_offset_enabled = false
+
+[optical_channel]
+loss = { value = 0.0, unit = "dB", source = "ASSUMPTION", ref = "Noiseless baseline" }
+loss_sweep_max = { value = 2.5, unit = "dB", source = "PUBLIC_SPEC", ref = "Illustrative loss sweep" }
+dispersion_enabled = false
+mpi_enabled = false
+
+[receiver]
+pd_responsivity = { value = 0.9, unit = "A/W", source = "ASSUMPTION", ref = "Synthetic receiver example" }
+tia_transimpedance = { value = 1.0e3, unit = "ohm", source = "ASSUMPTION", ref = "Synthetic receiver example" }
+reference_filter = { value = "Bessel-Thomson_4th_order", source = "PUBLIC_SPEC", ref = "Reference receiver example" }
+reference_filter_bandwidth = { value = 26.5625e9, unit = "Hz", source = "PUBLIC_SPEC", ref = "Half-symbol-rate reference bandwidth" }
+equalizer = { value = "none", source = "MODEL", ref = "First baseline" }
+shot_noise_enabled = false
+dark_noise_enabled = false
+tia_noise_enabled = false
+
+[metrics]
+required = ["static_spectrum", "eye", "P1", "P0", "OMA", "ER"]
+deferred = ["TDEC", "calibrated_BER", "sensitivity"]
+tdec_status = "not_implemented"
+ber_status = "validation_only"
+

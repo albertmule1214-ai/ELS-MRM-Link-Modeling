@@ -1,0 +1,31 @@
+.venv/
+.venvs/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# Generated outputs are reproducible and are not committed by default.
+results/*
+!results/.gitkeep
+
+# Real measurements and local device parameters must remain outside GitHub.
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+configs/local/
+
+# Papers, specifications, presentations and personal knowledge-base exports.
+references/
+papers/
+learning_notes/
+*.pdf
+*.pptx
+
+# Local tools and temporary files.
+.obsidian/
+tmp/
+pytest-cache-files-*/
+
