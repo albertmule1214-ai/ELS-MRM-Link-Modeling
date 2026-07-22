@@ -39,11 +39,14 @@ The synthetic target crossing is a software-validation result, not a calibrated 
 - Recorded `low_frequency_apc_psd_reused = false` in configuration and results.
 - Deferred data-modulated RIN BER until a conditional covariance or equivalent verified model exists.
 
+## L5 — quasi-static MRM temperature detuning
+
+- Converted temperature offset to resonance shift using an explicitly sourced coefficient.
+- Reused one deterministic PRBS/driver waveform and held each temperature fixed during evaluation.
+- Reported signed OMA, ER and eye height so polarity inversion cannot be hidden by absolute values.
+- Found the first synthetic P0=P1 crossing near -0.674 degC.
+- Kept thermal dynamics, heater and feedback control explicitly unimplemented.
+
 ## Next verified increment
 
-Add quasi-static MRM temperature detuning and separate it from high-speed random noise:
-
-```text
-temperature offset -> resonance shift -> OMA/ER/eye/BER sensitivity
-                   -> later thermal-control operating-point distribution
-```
+Calibrate the static thermal map with approved spectra or a PDK model, then add a slow thermal plant and controller around the calibrated operating point.

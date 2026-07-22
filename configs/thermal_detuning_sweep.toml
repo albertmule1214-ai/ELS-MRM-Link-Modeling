@@ -1,0 +1,18 @@
+[meta]
+name = "quasi_static_MRM_temperature_sweep_synthetic_v0"
+purpose = "Map temperature offset to resonance detuning, optical levels and eye height"
+status = "synthetic_validation_not_thermal_control_prediction"
+
+[sweep]
+temperature_min = { value = -4.0, unit = "degC", source = "ASSUMPTION", ref = "Synthetic quasi-static sweep" }
+temperature_max = { value = 4.0, unit = "degC", source = "ASSUMPTION", ref = "Synthetic quasi-static sweep" }
+points = { value = 81, unit = "point", source = "ASSUMPTION", ref = "0.1-degC resolution" }
+number_of_bits = { value = 4095, unit = "bit", source = "ASSUMPTION", ref = "Reduced deterministic sweep workload" }
+samples_per_ui = { value = 16, unit = "sample/UI", source = "ASSUMPTION", ref = "Reduced deterministic sweep workload" }
+
+[interpretation]
+thermal_dynamics = "not_implemented"
+heater_model = "not_implemented"
+control_loop = "not_implemented"
+temperature_is_quasi_static_operating_point = true
+
