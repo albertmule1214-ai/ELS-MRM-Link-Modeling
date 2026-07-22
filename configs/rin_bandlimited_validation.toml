@@ -1,0 +1,18 @@
+[meta]
+name = "band_limited_high_speed_rin_synthetic_v0"
+purpose = "Validate a high-speed RIN source with an explicit frequency support"
+status = "synthetic_validation_not_device_prediction"
+random_seed = 20260724
+
+[rin]
+psd_convention = { value = "one_sided_fractional_power", source = "MODEL", ref = "RIN PSD integrates to relative-power variance" }
+density = { value = -144.0, unit = "dB/Hz", source = "PUBLIC_SPEC", ref = "Illustrative high-speed RIN density; verify the project source and measurement band" }
+valid_frequency_min = { value = 10.0e6, unit = "Hz", source = "ASSUMPTION", ref = "Explicit synthetic lower support; not taken from APC data" }
+valid_frequency_max = { value = 40.0e9, unit = "Hz", source = "ASSUMPTION", ref = "Explicit synthetic upper support; replace with measured validity" }
+low_frequency_apc_psd_reused = false
+
+[validation]
+number_of_samples = { value = 1048576, unit = "sample", source = "ASSUMPTION", ref = "2^20 samples for reproducible FFT generation" }
+welch_segment_samples = { value = 16384, unit = "sample", source = "ASSUMPTION", ref = "PSD resolution versus averaging tradeoff" }
+receiver_reference_power = { value = "mean_noiseless_MRM_output", source = "MODEL", ref = "Constant-power receiver validation point" }
+

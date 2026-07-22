@@ -13,7 +13,7 @@ PRBS15
   -> fixed-reference-plane sampling
 ```
 
-L0 verifies static resonance width, detuning, OMA and ER. L1 adds time-domain signaling, deterministic ISI and eye generation. L2 validates one isolated additive white-noise source. L3 adds signal-dependent photodiode shot noise and a synthetic power-sensitivity sweep.
+L0 verifies static resonance width, detuning, OMA and ER. L1 adds time-domain signaling, deterministic ISI and eye generation. L2 validates one isolated additive white-noise source. L3 adds signal-dependent photodiode shot noise and a synthetic power-sensitivity sweep. L4 adds an explicitly band-limited high-speed RIN source and constant-power receiver validation.
 
 ## Implemented outputs
 
@@ -25,6 +25,7 @@ L0 verifies static resonance width, detuning, OMA and ER. L1 adds time-domain si
 - Gaussian conditional-tail BER with a directly countable stress validation.
 - Signal-dependent shot-noise variance using the squared reference-filter impulse response.
 - Conditional bit-0/bit-1 RMS and a synthetic BER-versus-received-power curve.
+- Band-limited fractional RIN PSD/RMS and constant-power receiver propagation.
 
 ## Explicitly not implemented
 

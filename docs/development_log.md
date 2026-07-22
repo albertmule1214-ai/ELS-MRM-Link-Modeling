@@ -30,12 +30,20 @@
 
 The synthetic target crossing is a software-validation result, not a calibrated device sensitivity or standards-compliance claim.
 
+## L4 — explicitly band-limited high-speed RIN
+
+- Added a one-sided fractional optical-power PSD with mandatory lower and upper validity frequencies.
+- Generated a real band-limited time waveform by retaining only explicitly allowed FFT bins.
+- Closed source theory, time RMS and Welch-integrated RMS.
+- Closed a constant-power PD/TIA/reference-receiver path against `gain^2 * RIN * |H|^2`.
+- Recorded `low_frequency_apc_psd_reused = false` in configuration and results.
+- Deferred data-modulated RIN BER until a conditional covariance or equivalent verified model exists.
+
 ## Next verified increment
 
-Add band-limited laser RIN only over an explicitly configured validity range:
+Add quasi-static MRM temperature detuning and separate it from high-speed random noise:
 
 ```text
-configured RIN support -> optical-power PSD -> generated waveform
-                       -> measured PSD/RMS -> conditional BER penalty
+temperature offset -> resonance shift -> OMA/ER/eye/BER sensitivity
+                   -> later thermal-control operating-point distribution
 ```
-
