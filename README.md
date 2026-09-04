@@ -1,68 +1,73 @@
-# ELS + MRM Optical-Link System Model
+# ELS + Microring Optical-Link System Model
 
-Local, offline Python models for studying how transmitter, microring-modulator and receiver impairments affect a single-channel optical link.
+Sanitized, reproducible Python models from a 2026 microring internship. All
+checked-in configurations are synthetic or public examples. No customer data,
+internal presentation, licensed PDK, Cadence/OA database or calibrated product
+parameter is included.
 
-The first target is a synthetic 53.125-Gbaud NRZ link:
+## Download
+
+- Git: `git clone https://github.com/albertmule1214-ai/ELS-MRM-Link-Modeling.git`
+- Browser: select **Code -> Download ZIP** on GitHub.
+- Direct ZIP: <https://github.com/albertmule1214-ai/ELS-MRM-Link-Modeling/archive/refs/heads/main.zip>
+
+Prefer the latest tagged release for a fixed, reproducible handoff.
+
+## Included models
 
 ```text
-PRBS15 -> voltage driver -> TX microring modulator -> optical loss
-       -> photodiode -> TIA -> reference receiver -> eye / PSD / BER
+PRBS -> driver -> TX microring -> optical loss -> PD/TIA -> eye / PSD / BER
 ```
 
-This repository is intentionally data-safe. It contains reusable code, tests and synthetic example configurations. It does **not** contain internal presentations, papers, specifications, measured device data or project-specific parameter files.
+- L0 static microring transfer, Q/detuning, OMA and ER.
+- L1 noiseless 53.125-Gbaud NRZ waveform and eye.
+- L2 one-sided white-noise PSD, RMS and countable-BER closure.
+- L3 signal-dependent shot noise and synthetic sensitivity.
+- L4 explicitly band-limited RIN with PSD/RMS closure.
+- L5 quasi-static temperature detuning and eye-polarity mapping.
+- L6 synthetic four-lane feedback: local RX-ring tracking plus slow shared-ELS
+  recentering, with delay/gain, range, outlier and sensor sweeps.
 
-## Current milestones
+L6 is a behavioral architecture example. Its time constants, wavelength
+ranges, delays and sensor errors are assumptions, not hardware limits.
 
-- L0: static through-port MRM transfer function, Q/detuning sweep, OMA and ER.
-- L1: noiseless 53.125-Gbaud NRZ waveform and receiver eye.
-- L2: isolated additive white-noise validation from one-sided PSD to filtered RMS and countable BER.
-- L3: signal-dependent photodiode shot noise, conditional 0/1 RMS and a synthetic receiver-sensitivity curve.
-- L4: explicitly band-limited high-speed RIN with source and constant-power receiver PSD/RMS closure.
-- L5: quasi-static MRM temperature detuning, signed OMA/ER and eye-polarity mapping.
-- Automated tests cover PRBS balance, reference-plane alignment, Q sweeps, PSD/RMS closure and BER counting.
-
-Formal TDEC, calibrated sensitivity, laser RIN/linewidth conversion, thermal control, WDM crosstalk and receiver rings are future work.
-
-## Important scientific boundary
-
-All numerical values in `configs/mrm_oci_53g_nrz_v0.toml` are either public-spec examples or explicitly marked synthetic assumptions. They are useful for validating the software architecture, not for predicting a specific device.
-
-The BER stress test deliberately uses a directly countable BER near `1e-3`. It validates the Gaussian-tail calculation; it does not claim an ultra-low device BER. The platform must not estimate `1e-12` BER by brute-force transmission of `1e12` bits.
-
-## Setup
+## Five-minute setup
 
 Python 3.11 or newer is required.
 
 ```powershell
 python -m venv .venv
 & .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-```
-
-Run the verified stages:
-
-```powershell
-& .\.venv\Scripts\python.exe scripts\run_static_baseline.py
-& .\.venv\Scripts\python.exe scripts\run_noiseless_l1.py
-& .\.venv\Scripts\python.exe scripts\run_white_noise_validation.py
-& .\.venv\Scripts\python.exe scripts\run_shot_noise_sensitivity.py
-& .\.venv\Scripts\python.exe scripts\run_rin_bandlimited_validation.py
-& .\.venv\Scripts\python.exe scripts\run_thermal_detuning_sweep.py
 & .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Generated plots and JSON/CSV summaries appear in `results/`.
+Run the new feedback examples:
 
-## Repository map
-
-```text
-configs/      synthetic, provenance-tagged examples
-docs/         scope, roadmap and development record
-scripts/      reproducible entry points
-src/mrm_link/ model implementation
-tests/        numerical and regression tests
-data/         ignored placeholders for local data
-results/      ignored generated outputs
+```powershell
+& .\.venv\Scripts\python.exe scripts\run_bidirectional_els_rx_feedback.py
+& .\.venv\Scripts\python.exe scripts\run_bidirectional_els_rx_robustness.py
 ```
 
-Read [docs/model_scope.md](docs/model_scope.md) before interpreting results, [docs/shot_noise_and_sensitivity.md](docs/shot_noise_and_sensitivity.md) for the L3 equations, [docs/band_limited_rin.md](docs/band_limited_rin.md) for the L4 boundary, [docs/quasi_static_thermal_detuning.md](docs/quasi_static_thermal_detuning.md) for L5, and [docs/data_boundary.md](docs/data_boundary.md) before adding data or parameters.
+Other runnable stages are under `scripts/`. Generated PNG, CSV and JSON files
+appear under `results/` and are ignored by Git.
 
+## Adaptation and handoff
+
+Start with:
+
+- `configs/bidirectional_els_rx_feedback_synthetic.toml`
+- `configs/bidirectional_els_rx_robustness_synthetic.toml`
+- `docs/bidirectional_els_rx_feedback.md`
+- `docs/handoff_and_data_boundary.md`
+
+Keep private parameters in ignored `configs/local/` and private data outside
+Git. The actual licensed Cadence/PDK implementation belongs in a separate
+company-internal handoff.
+
+## Scientific and legal boundary
+
+- No result is product compliance, silicon prediction or tape-out signoff.
+- Slow thermal feedback does not remove MHz-to-GHz laser noise.
+- No patent, PDK or third-party data rights are conveyed.
+- A formal open-source license has not been selected; obtain project-owner
+  approval before external redistribution or commercial use.

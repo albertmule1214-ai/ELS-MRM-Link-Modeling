@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mrm-link-model"
-version = "0.1.0.dev0"
+version = "0.2.0"
 description = "Offline system-level ELS + microring optical link noise-to-BER modeling platform"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -25,4 +25,3 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra -p no:cacheprovider"
-

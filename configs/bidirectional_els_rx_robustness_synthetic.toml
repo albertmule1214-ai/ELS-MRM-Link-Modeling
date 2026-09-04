@@ -1,0 +1,20 @@
+[meta]
+name = "bidirectional_els_rx_robustness_synthetic"
+status = "SYNTHETIC_PARAMETER_SWEEP_NOT_HARDWARE_PREDICTION"
+
+[delay_gain_sweep]
+backward_delay_us = { value = [0.0, 10.0, 20.0, 50.0, 100.0, 200.0, 400.0], source = "SYNTHETIC_SWEEP", ref = "Transport and processing delay" }
+els_recenter_ki_per_s = { value = [200.0, 400.0, 800.0, 1200.0, 2000.0, 3000.0], source = "SYNTHETIC_SWEEP", ref = "Outer-loop integral gain" }
+pass_residual_rms_pm = { value = 5.0, source = "SYNTHETIC_TARGET", ref = "Comparison threshold" }
+pass_common_rx_pm = { value = 15.0, source = "SYNTHETIC_TARGET", ref = "Comparison threshold" }
+
+[capture_sweep]
+common_laser_step_pm = { value = [0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 150.0, 175.0, 200.0, 225.0, 250.0], source = "SYNTHETIC_SWEEP", ref = "Actuator-sharing demonstration" }
+
+[outlier_sweep]
+single_lane_rx_step_pm = { value = [0.0, 20.0, 40.0, 60.0, 80.0, 100.0, 120.0], source = "SYNTHETIC_SWEEP", ref = "Robust common-mode estimator test" }
+estimators = { value = ["mean", "median"], source = "MODEL", ref = "Aggregation comparison" }
+
+[sensor_sweep]
+noise_rms_pm = { value = [0.0, 0.2, 1.0, 5.0, 20.0], source = "SYNTHETIC_SWEEP", ref = "Estimator noise stress" }
+quantization_pm = { value = [0.0, 0.25, 1.0, 5.0, 20.0], source = "SYNTHETIC_SWEEP", ref = "Estimator quantization stress" }

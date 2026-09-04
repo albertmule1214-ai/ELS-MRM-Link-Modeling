@@ -50,3 +50,11 @@ The synthetic target crossing is a software-validation result, not a calibrated 
 ## Next verified increment
 
 Calibrate the static thermal map with approved spectra or a PDK model, then add a slow thermal plant and controller around the calibrated operating point.
+
+## L6 — synthetic hierarchical ELS/RX feedback
+
+- Added four local RX loops and one slower shared-ELS recentering loop.
+- Added delayed, quantized and noisy backward telemetry.
+- Used median common-mode aggregation to reject one abnormal lane.
+- Added delay/gain, capture, outlier and sensor robustness sweeps.
+- Kept all values synthetic; no hardware or phase-noise-cancellation claim.

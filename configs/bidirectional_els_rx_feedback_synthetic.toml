@@ -1,0 +1,40 @@
+[meta]
+name = "bidirectional_els_rx_feedback_synthetic"
+purpose = "Compare no control, local RX tracking and joint RX-to-ELS feedback"
+status = "SYNTHETIC_FEASIBILITY_EXAMPLE_NOT_HARDWARE_PREDICTION"
+
+[simulation]
+lane_count = { value = 4, unit = "lane", source = "SYNTHETIC", ref = "Four-lane demonstration" }
+time_step = { value = 1.0e-6, unit = "s", source = "SYNTHETIC", ref = "Behavioral simulation resolution" }
+duration = { value = 4.0e-3, unit = "s", source = "SYNTHETIC", ref = "Demonstration interval" }
+random_seed = { value = 20260904, source = "SYNTHETIC", ref = "Reproducible sensor noise" }
+
+[rx_control]
+actuator_time_constant = { value = 30.0e-6, unit = "s", source = "SYNTHETIC", ref = "Replace with measured step response" }
+kp = { value = 0.8, unit = "pm/pm", source = "SYNTHETIC", ref = "Behavioral baseline" }
+ki = { value = 4.0e3, unit = "1/s", source = "SYNTHETIC", ref = "Behavioral baseline" }
+actuator_limit = { value = 120.0, unit = "pm", source = "SYNTHETIC", ref = "Illustrative range" }
+
+[els_control]
+actuator_time_constant = { value = 250.0e-6, unit = "s", source = "SYNTHETIC", ref = "Replace with measured step response" }
+recenter_ki = { value = 1.2e3, unit = "1/s", source = "SYNTHETIC", ref = "Behavioral baseline" }
+actuator_limit = { value = 150.0, unit = "pm", source = "SYNTHETIC", ref = "Illustrative range" }
+
+[backward_channel]
+common_mode_estimator = { value = "median", source = "MODEL", ref = "Robust aggregation rejects one lane outlier" }
+update_period = { value = 10.0e-6, unit = "s", source = "SYNTHETIC", ref = "Low-rate telemetry placeholder" }
+delay = { value = 20.0e-6, unit = "s", source = "SYNTHETIC", ref = "Transport and processing delay" }
+sensor_quantization = { value = 0.25, unit = "pm", source = "SYNTHETIC", ref = "Abstract estimator resolution" }
+sensor_noise_rms = { value = 0.20, unit = "pm", source = "SYNTHETIC", ref = "Abstract estimator noise" }
+
+[disturbance]
+common_laser_step = { value = 50.0, unit = "pm", source = "SYNTHETIC", ref = "Common wavelength step" }
+laser_step_time = { value = 0.50e-3, unit = "s", source = "SYNTHETIC", ref = "Scenario event" }
+local_rx_steps = { value = [12.0, -8.0, 20.0, -15.0], unit = "pm", source = "SYNTHETIC", ref = "Independent lane disturbances" }
+rx_step_time = { value = 1.80e-3, unit = "s", source = "SYNTHETIC", ref = "Scenario event" }
+final_laser_ramp = { value = 25.0, unit = "pm", source = "SYNTHETIC", ref = "Slow common drift" }
+ramp_start_time = { value = 2.60e-3, unit = "s", source = "SYNTHETIC", ref = "Scenario event" }
+
+[acceptance]
+residual_detuning_rms = { value = 5.0, unit = "pm", source = "SYNTHETIC_TARGET", ref = "Software comparison threshold" }
+rx_heater_recentering = { value = 15.0, unit = "pm", source = "SYNTHETIC_TARGET", ref = "Software comparison threshold" }
